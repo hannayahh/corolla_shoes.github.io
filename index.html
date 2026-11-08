@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Corolla Shoes</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .category{
+            width: 100%;
+            text-align: center;
+            margin: 30px auto;
+        }
+        .category h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #30205c;
+        }
+        .categories {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        .cats {
+            margin: 30px;
+            overflow: hidden;
+            position: relative;
+            border-radius: 10px;
+
+        }
+
+        .cats img {
+            width: 350px;
+            height: 280px;
+            display: block;
+        }
+
+        .cats h1 {
+            
+            position: absolute;
+            top: 0;
+            left: 0;
+
+            width: 100%;
+            height: 100%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            color: white;
+            font-size: 30px;
+            margin: 0;
+
+            background: rgba(0, 0, 0, 0.4);
+        }
+        
+        .cats:hover img{
+            transform: rotateY(360deg);
+            transition: 2s;
+        }
+        
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            gap: 20px;
+            padding: 40px;
+            background-color: #946efd;
+            height: 530px;
+            box-sizing: border-box;
+        }
+
+        .video {
+            width: 300px;
+            flex: 0 0 300px;
+            height: 450px;
+            margin: 0;
+            
+        }
+
+        .video video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            border-radius: 10px;
+        }
+
+        .info {
+            flex: 1;
+            height: 450px;
+            min-width: 0;
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .info img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: 0.5s ease;
+        }
+
+        .info:hover img{
+            transform: scale(1.1);
+            transition: 1s;
+            filter: brightness(1.1);
+        }
+
+        .outer {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 30px;
+            box-sizing: border-box;
+            color: white;
+            background: rgba(34, 3, 87, 0.45);
+        }
+
+        .outer button {
+            padding: 12px 25px;
+            background-color: rgb(184, 158, 255);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            transition: 0.3s;
+            inset: 0;
+        }
+
+        .outer button:hover {
+            background-color: white;
+            transform: scale(1.03);
+        }
+
+        .about {
+            background: linear-gradient(to bottom, white, #b097f5);
+            color: rgb(46, 12, 126);
+            text-align: center;
+            padding: 90px 20px;
+        }
+
+        .about h4 {
+            letter-spacing: 5px;
+            font-size: 13px;
+            color: #c9b5ff;
+        }
+
+        .about h1 {
+            font-size: 48px;
+            margin: 15px 0;
+        }
+
+        .about p {
+            font-size: 18px;
+            line-height: 1.7;
+            max-width: 650px;
+            margin: 0 auto 30px;
+        }
+
+        .about button {
+            padding: 14px 30px;
+            background: #211046;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .about button:hover {
+            color: #7447f1;
+            background: white;
+            transform: translateY(-4px);
+        }
+
+    </style>
+</head>
+<body>
+
+
+    <nav class="navbar">
+        <a class="logo">
+            <img src="logo.png" alt="Corolla Logo">
+        </a>
+
+        <ul class="nav-links">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="menu.html" >Shop</a></li>
+            <li><a href="contacts.html">Contact</a></li>
+            <li>
+                <button class="cart-nav" onclick="openCart()">
+                    🛒 Cart (<span id="cart-count">0</span>)
+                </button>
+            </li>
+        </ul>
+    </nav>
+
+    <video width="100%" autoplay muted loop playsinline>
+        <source src="corolla_vid.mp4" type="video/mp4">
+    </video>
+    
+    <div class="category">
+      
+        <h1 style="font-family: 'Courier New', monospace;">FEATURED CATEGORIES</h1>
+      
+        <div class="categories">
+            <a class="cats" href="menu.html#kids">
+                
+                <img src="kids.jpg">
+                    <h1>KIDS</h1>
+            </a>
+            
+            <a class="cats" href="menu.html#womens">
+                <img src="women.png">
+                <h1>WOMENS</h1>
+            </a>
+            <a class="cats" href="menu.html#mens">
+                <img src="men.png">
+                <h1>MENS</h1>
+            </a>
+         </div>
+    </div>
+
+    <div class="container">
+        <div class="video">
+             <video width="300px" autoplay muted loop playsinline>
+                <source src="vid1.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <div class="video">
+             <video width="300px" autoplay muted loop playsinline>
+                <source src="vid2.mp4" type="video/mp4">
+            </video>
+        </div>
+
+        <div class="info">
+            <img src="cont.png">
+            <div class="outer">
+            <h1 style="font-size: 45px; font-size: 38px; margin: 0 0 10px;">COROLLA</h1>
+            <h3 style="font-size: 35px; letter-spacing: 2px; margin: 0 0 15px;">STEP INTO YOUR STYLE.</h3>
+            <p style="font-size: 20px; line-height: 1.7; max-width: 50%; margin: 0 0 20px;">Discover footwear that combines timeless design, everyday comfort, and effortless style. Find your perfect pair and make every step count.</p>
+            <a href="menu.html">
+                <button>EXPLORE COLLECTION</button>
+            </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="about">
+        <h1>Designed to Stand Out</h1>
+        <p>Thoughtfully crafted styles that combine everyday comfort with a touch of timeless elegance.</p>
+        <a href="about.html">
+            <button>LEARN MORE</button>
+        </a>
+    </div>
+
+<div class="cart-sidebar" id="cartSidebar">
+
+    <div class="cart-header">
+        <div>
+            <h2>My Cart</h2>
+            <p>Review your selected items</p>
+        </div>
+
+        <button class="close-cart" onclick="closeCart()">✕</button>
+    </div>
+
+    <div class="cart-items" id="cartItems">
+        <!-- Products will appear here -->
+    </div>
+
+    <div class="cart-footer">
+
+        <div class="subtotal">
+            <span>Subtotal</span>
+            <strong>₱<span id="total">0.00</span></strong>
+        </div>
+
+        <button class="checkout-btn" onclick="openCheckout()">
+            PROCEED TO CHECKOUT
+        </button>
+
+        <p class="cart-note">
+            Shipping fees will be calculated separately.
+        </p>
+
+    </div>
+
+</div>
+
+<div class="checkout-overlay" id="checkoutOverlay">
+
+    <div class="checkout-modal">
+
+        <div class="checkout-header">
+            <div>
+                <h2>Checkout</h2>
+                <p>Enter your information to complete your order.</p>
+            </div>
+
+            <button onclick="closeCheckout()">✕</button>
+        </div>
+
+        <form id="checkoutForm">
+
+            <h3>Customer Information</h3>
+
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" id="customerName"
+                    placeholder="Enter your full name" required>
+            </div>
+
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" id="customerEmail"
+                    placeholder="Enter your email" required>
+            </div>
+
+            <div class="form-group">
+                <label>Contact Number</label>
+                <input type="tel" id="customerPhone"
+                    placeholder="09XXXXXXXXX" required>
+            </div>
+
+            <h3>Delivery Information</h3>
+
+            <div class="form-group">
+                <label>Complete Address</label>
+                <textarea id="customerAddress"
+                    placeholder="House number, street, barangay"
+                    required></textarea>
+            </div>
+
+            <div class="form-row">
+
+                <div class="form-group">
+                    <label>City / Municipality</label>
+                    <input type="text" id="customerCity"
+                        placeholder="City" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Province</label>
+                    <input type="text" id="customerProvince"
+                        placeholder="Province" required>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label>Postal Code</label>
+                <input type="text" id="customerPostal"
+                    placeholder="Postal code" required>
+            </div>
+
+            <div class="checkout-summary">
+                <span>Total Amount</span>
+                <strong>₱<span id="checkoutTotal">0.00</span></strong>
+            </div>
+
+            <button type="submit" class="place-order-btn">
+                PLACE ORDER
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+    
+<footer class="footer" id="footer">
+
+    <div class="footer-container">
+
+        <div class="footer-about">
+            <h2>COROLLA SHOES</h2>
+            <p>
+                Step into comfort and style.
+                Discover footwear that complements
+                every step of your journey.
+            </p>
+        </div>
+
+        <div class="footer-links">
+            <h3>Quick Links</h3>
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="collection.html">Collections</a>
+            <a href="gallery.html">Gallery</a>
+        </div>
+
+        <div class="footer-links">
+            <h3>Customer Service</h3>
+            <a href="contacts.html">Contact Us</a>
+        </div>
+
+        <div class="footer-social">
+            <h3>Follow Us</h3>
+            <a href="https://www.tiktok.com/@corollashoes.official.ph?_r=1&t=ZS-9AmzLDIUdCj" >Tiktok</a>
+            <a href="https://shopee.ph/corollashoes.ph" >Shopee</a>
+            <a href="https://www.lazada.com.ph/shop/corolla-shoes/?spm=a2o4l.pdp_revamp.seller.1.73de55213MPI1y&itemId=15435195866&channelSource=pdp" >Lazada</a>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        <p>© 2026 Corolla Shoes. All Rights Reserved.</p>
+    </div>
+
+</footer>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>

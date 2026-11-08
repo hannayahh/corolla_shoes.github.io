@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+    body:has(.category:target) .gallery {
+        display: none;
+    }
+
+    .category-section {
+        width: 100%;
+        padding: 70px 30px 50px;
+        text-align: center;
+        background-color: #faf8ff;
+        
+    }
+
+    .categories {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin-top: 30px;
+    }
+
+    .categories a {
+        text-decoration: none;
+        color: #292929;
+        background: transparent;
+        border: 1px solid #b9aa98;
+        padding: 14px 30px;
+        min-width: 150px;
+        font-size: 12px;
+        letter-spacing: 2px;
+        font-weight: bold;
+        transition: 0.3s;
+    }
+
+    .categories a:hover {
+        background: #8c65e6;
+        color: white;
+        border-color: #292929;
+    }
+    /* HIDE CATEGORY PAGES */
+    .category {
+        display: none;
+        padding: 50px;
+    }
+    body:has(#womens:target) .categories a[href="#womens"],
+    body:has(#mens:target) .categories a[href="#mens"],
+    body:has(#kids:target) .categories a[href="#kids"] {
+        background: #8c65e6;
+    }
+
+    /* SHOW SELECTED CATEGORY */
+    .category:target {
+        display: block;
+    }
+
+    /* HIDE GALLERY WHEN CATEGORY IS SELECTED */
+    .category:target ~ .gallery {
+        display: none;
+    }
+
+    .back {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+
+    display: inline-block;
+    padding: 14px 25px;
+
+    background: #593a9a;
+    color: white;
+    text-decoration: none;
+
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: bold;
+
+    z-index: 999;
+    transition: 0.3s ease;
+    }
+
+    .back:hover {
+        background: #745aac;
+        transform: translateY(-5px);
+    }
+
+    .gallery {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: 200px 200px 180px;
+        gap: 10px;
+        margin: auto;
+        width: 90%;
+        padding: 20px;;
+    }
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .one {
+        grid-column: 1;
+        grid-row: 1;
+    }
+
+    .two {
+        grid-column: 2;
+        grid-row: 1 / 3;
+    }
+
+    .three {
+        grid-column: 3 / 5;
+        grid-row: 1;
+    }
+
+    .four {
+        grid-column: 1;
+        grid-row: 2;
+    }
+
+    .five {
+        grid-column: 3;
+        grid-row: 2;
+    }
+
+    .six {
+        grid-column: 4;
+        grid-row: 2;
+    }
+
+    .seven {
+        grid-column: 1;
+        grid-row: 3;
+    }
+
+    .eight {
+        grid-column: 2;
+        grid-row: 3;
+    }
+
+    .nine {
+        grid-column: 3 / 5;
+        grid-row: 3;
+    }
+
+        
+    .product-container {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 25px;
+        padding: 30px;
+    }
+
+    .product-box {
+        width: 280px;
+        flex: 0 0 280px;
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        transition: 0.3s;
+
+        display: flex;
+        flex-direction: column;
+    }
+
+    .product-box:hover {
+        transform: scale(1.03);
+    }
+
+    .product-box img {
+        width: 100%;
+        height: 230px;
+        object-fit: cover;
+    }
+
+    /* PRODUCT INFORMATION */
+    .product-info {
+        padding: 12px;
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+    }
+
+    .product-info h2 {
+        font-size: 17px;
+        margin-bottom: 8px;
+    }
+
+    .product-info p {
+        color: gray;
+        font-size: 12px;
+        line-height: 1.4;
+    }
+
+    .product-info h3 {
+        color: #533697;
+        font-size: 16px;
+        margin: 10px 0;
+    }
+
+    .product-info button {
+        width: 100%;
+        padding: 9px;
+        font-size: 12px;
+        background: #4d3e6d;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        margin-top: auto;
+    }
+
+    .product-info button:hover {
+        background: #32275a;
+    }
+
+
+    /* POPUP BACKGROUND */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+
+        background: rgba(0,0,0,0.5);
+
+        justify-content: center;
+        align-items: center;
+    }
+
+
+    /* MODAL BACKGROUND */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        inset: 0;
+        background: rgba(0,0,0,0.5);
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* MODAL BOX */
+    .modal-content {
+        background: white;
+        width: 650px;
+        max-width: 90%;
+        display: flex;
+        align-items: center;
+        gap: 25px;
+        padding: 25px;
+        border-radius: 15px;
+        position: relative;
+        animation: popup 0.3s ease;
+    }
+
+    /* LEFT IMAGE */
+    .modal-image {
+        width: 50%;
+    }
+
+
+    .modal-image video,
+    .modal-image img {
+        width: 100%;
+        height: 300px;
+        object-fit: cover;
+        border-radius: 10px;
+    }
+
+    /* RIGHT DETAILS */
+    .modal-details {
+        width: 50%;
+    }
+
+    .modal-details h2 {
+        margin-bottom: 15px;
+        font-size: 22px;
+    }
+
+    .modal-details label {
+        display: block;
+        margin: 12px 0 6px;
+        font-weight: bold;
+    }
+
+    .modal-details select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+    }
+
+    .modal-details h3 {
+        margin-top: 20px;
+        color: #56439b;
+    }
+
+    .modal-details button {
+        width: 100%;
+        padding: 12px;
+        margin-top: 20px;
+        background: #7b52ee;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+    }
+
+    .modal-details button:hover {
+        background: #8467c7;
+    }
+
+    /* CLOSE BUTTON */
+    .close {
+        position: absolute;
+        right: 15px;
+        top: 8px;
+        font-size: 28px;
+        cursor: pointer;
+        z-index: 2;
+    }
+
+    /* ANIMATION */
+    @keyframes popup {
+        from {
+            transform: scale(0.8);
+            opacity: 0;
+        }
+        to {
+            transform: scale(1);
+            opacity: 1;
+        }
+    }
+
+
+    
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a class="logo">
+            <img src="logo.png" alt="Corolla Logo">
+        </a>
+
+        <ul class="nav-links">
+            <li><a href="index.html" >Home</a></li>
+            
+            <li><a href="about.html">About</a></li>
+            <li><a href="menu.html" class="active">Shop</a></li>
+            <li><a href="contacts.html">Contact</a></li>
+            <li>
+                <button class="cart-nav" onclick="openCart()">
+                    🛒 Cart (<span id="cart-count">0</span>)
+                </button>
+            </li>
+        </ul>
+    </nav>
+
+    <section class="category-section" id="category">
+        <p class="collection-label">COROLLA SHOES</p>
+        <h1 style="margin-top: 20px">Our Collection</h1>
+        <p class="collection-description" style="margin-top: 20px">
+            Explore our latest shoe collections and find the perfect pair for every style.
+        </p>
+    </div>
+
+    <div class="categories">
+        <a href="#womens">WOMENS</a>
+        <a href="#mens">MENS</a>
+        <a href="#kids">KIDS</a>
+    </div>
+
+</section>
+
+
+    <section id="gallery" class="gallery">
+
+        <img class="one" src="pic.jpg">
+        <img class="two" src="pic3.jpg">
+        <img class="three" src="pic2.jpg">
+        <img class="four" src="pic4.jpg">
+        <img class="five" src="pic5.png">
+        <img class="six" src="pic7.png">
+        <img class="seven" src="pic10.png">
+        <img class="eight" src="pic9.png">
+        <img class="nine" src="pic6.png">
+
+    </section>
+
+    <!-- WOMENS CATEGORY -->
+    <section id="womens" class="category">
+
+        <a href="#gallery" class="back">← Back to Gallery</a>
+
+        <h1 style="text-align: center;">Womens Collection</h1>
+
+        <div class="product-container">
+
+            <div class="product-box">
+                <img src="w1.png">
+
+                <div class="product-info">
+                    <h2>Corolla BalletShoes</h2>
+                    <p>Mary Janes: Elegant Doll Shoes for Women, 
+                        Retro Balletcore Flats, Lightweight & Breathable Mesh Sneakers </p>
+                    <h3>₱739</h3>
+
+                    <button onclick="openModal(
+                        'Corolla BalletShoes',
+                        'Mary Janes: Elegant Doll Shoes for Women, Retro Balletcore Flats, Lightweight & Breathable Mesh Sneakers ',
+                        'w1.mp4',
+                        {
+                            Black: 'w1b.png',
+                            White: 'w1w.png',
+                            Silvery: 'w1s.png',
+                            'Black Pink': 'w1bp.png'
+                        },
+                        {
+                            36: 929,
+                            37: 881,
+                            38: 881,
+                            39: 881,
+                            40: 739,
+                            41: 929
+                        }
+                        )">Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="product-box">
+                <img src="w2.png">
+
+                <div class="product-info">
+                    <h2>Corolla AirLace</h2>
+                    <p>Mary Janes for Women, Elegant Ballet Flats, Lightweight 
+                        & Breathable Lace Mesh doll shoes with Double Adjustable Straps</p>
+                    <h3>₱819</h3>
+
+                    <button onclick="openModal(
+                        'Corolla AirLace',
+                        'Mary Janes for Women, Elegant Ballet Flats, Lightweight & Breathable Lace Mesh doll shoes with Double Adjustable Straps',
+                        'w2.mp4',
+                        {
+                            Black: 'w2b.png',
+                            'Beige White': 'w2bw.png',
+                            Silver: 'w2s.png'
+                        },
+                        {
+                            36: 819,
+                            37: 819,
+                            38: 819,
+                            39: 829,
+                            40: 829,
+                            41: 829
+                        }
+                        )">Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="product-box">
+                <img src="w3.png">
+
+                <div class="product-info">
+                    <h2>Corolla Wevia</h2>
+                    <p>Mary Jane Flats Breathable Knit Shoes Comfortable Soft Ballet Flats with Adjustable Strap for Work & Daily Commute</p>
+                    <h3>₱739</h3>
+
+                    <button onclick="openModal(
+                        'Corolla Wevia',
+                        'Mary Jane Flats Breathable Knit Shoes Comfortable Soft Ballet Flats with Adjustable Strap for Work & Daily Commute',
+                        'w3.mp4',
+                        {
+                            Black: 'w3bl.png',
+                            Beige: 'w3b.png',
+                            Burgundy: 'w3bu.png',
+                            Apricot: 'w3a.png'
+                        },
+                        {
+                            36: 689,
+                            37: 689,
+                            38: 689,
+                            39: 689,
+                            40: 689,
+                            41: 689,
+                        }
+                        )">Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="product-box">
+                <img src="w4.png">
+
+                <div class="product-info">
+                    <h2>Corolla Twira</h2>
+                    <p>Women's Ballet Sneakers Lightweight Breathable Low Profile Casual doll Shoes Soft Comfortable Walking Shoes for Daily Wear</p>
+                    <h3>₱819</h3>
+
+                    <button onclick="openModal(
+                        'Corolla Twira',
+                        'Womens Ballet Sneakers Lightweight Breathable Low Profile Casual doll Shoes Soft Comfortable Walking Shoes for Daily Wear',
+                        'w4.mp4',
+                        {
+                            'Pink Black': 'w4pb.png',
+                            'Off-white & Silver': 'w4os.png'
+                        },
+                        {
+                            36: 819,
+                            37: 829,
+                            38: 819,
+                            39: 819,
+                            40: 829,
+                            41: 829
+                        }
+                        )">Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="product-box">
+                <img src="w5.png">
+
+                <div class="product-info">
+                    <h2>Corolla Bunelle</h2>
+                    <p>Women's French Style Mary Jane Ballet Flats Bow Cap Toe Comfortable Casual doll shoes for Daily Wear</p>
+                    <h3>₱599</h3>
+
+                    <button onclick="openModal(
+                        'Corolla Bunelle',
+                        'Womens French Style Mary Jane Ballet Flats Bow Cap Toe Comfortable Casual doll shoes for Daily Wear',
+                        'w5.mp4',
+                        {
+                            'Beige White': 'w5b.png'
+                        },
+                        {
+                            36: 599,
+                            37: 599,
+                            38: 599,
+                            39: 599,
+                            40: 599,
+                            41: 599
+                        }
+                        )">Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="product-box">
+                <img src="w6.png">
+
+                <div class="product-info">
+                    <h2>Corolla Aveni</h2>
+                    <p>French Style Cutout doll shoes & Breathable Lightweight Flat Mary Jane Shoes</p>
+                    <h3>₱709</h3>
+
+                    <button onclick="openModal(
+                        'Corolla Aveni',
+                        'French Style Cutout doll shoes & Breathable Lightweight Flat Mary Jane Shoes',
+                        'w6.mp4',
+                        {
+                            Black: 'w6bl.png',
+                            'Beige White': 'w6b.png'
+                        },
+                        {
+                            36: 709,
+                            37: 709,
+                            38: 699,
+                            39: 709,
+                            40: 709,
+                            41: 709
+                        }
+                        )">Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="product-box">
+                <img src="w7.png">
+
+                <div class="product-info">
+                    <h2>Corolla ReviJane</h2>
+                    <p>Mary Jane Sneakers for Women, Retro Low Profile Shoes, Lightweight & Breathable Casual Walking Shoes for School</p>
+                    <h3>₱829</h3>
+
+                    <button onclick="openModal(
+                        'Corolla ReviJane',
+                        'Mary Jane Sneakers for Women, Retro Low Profile Shoes, Lightweight & Breathable Casual Walking Shoes for School',
+                        'w7.mp4',
+                        {
+                            Black: 'w7b.png',
+                            White: 'w7w.png'
+                        },
+                        {
+                            36: 829,
+                            37: 829,
+                            38: 829,
+                            39: 829,
+                            40: 829,
+                            41: 829
+                        }
+                        )">Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="product-box">
+                <img src="w8.png">
+
+                <div class="product-info">
+                    <h2>Corolla Dotti</h2>
+                    <p>Women's Ballet Flats Mary Jane Style Shoes Retro Polka Dot Bow Comfortable Soft Sole Casual Shoes for Daily Wear</p>
+                    <h3>₱719</h3>
+
+                    <button onclick="openModal(
+                        'Corolla Dotti',
+                        'Womens Ballet Flats Mary Jane Style Shoes Retro Polka Dot Bow Comfortable Soft Sole Casual Shoes for Daily Wear',
+                        'w8.mp4',
+                        {
+                            Black: 'w8b.png',
+                            White: 'w8w.png'
+                        },
+                        {
+                            36: 719,
+                            37: 719,
+                            38: 719,
+                            39: 719,
+                            40: 719,
+                            41: 719
+                        }
+                        )">Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="product-box">
+                <img src="w9.png">
+
+                <div class="product-info">
+                    <h2>Corolla PinkMuse</h2>
+                    <p>Lightweight Work Shoes, PU material Athletic Casual Footwear</p>
+                    <h3>₱654</h3>
+
+                    <button onclick="openModal(
+                        'Corolla PinkMuse',
+                        'Lightweight Work Shoes, PU material Athletic Casual Footwear',
+                        'w9.mp4',
+                        {
+                            Pink: 'w9p.png',
+                            White: 'w9w.png',
+                            Gray: 'w9g.png'
+                        },
+                        {
+                            36: 654,
+                            37: 735,
+                            38: 745,
+                            39: 755,
+                            40: 755,
+                            41: 735
+                        }
+                        )">Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="product-box">
+                <img src="w10.png">
+
+                <div class="product-info">
+                    <h2>Corolla PureStep</h2>
+                    <p> Soft PU Material Lightweight Breathable White Casual Shoes for Women & Students ready stock</p>
+                    <h3>₱819</h3>
+
+                    <button onclick="openModal(
+                        'Corolla PureStep',
+                        ' Soft PU Material Lightweight Breathable White Casual Shoes for Women & Students ready stock',
+                        'w10.mp4',
+                        {
+                           'Beige Gray': 'w10b.png',
+                        },
+                        {
+                            36: 850,
+                            37: 655,
+                            38: 854,
+                            39: 855,
+                            40: 855,
+                            41: 622
+                        }
+                        )">Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="product-box">
+                <img src="w11.png">
+
+                <div class="product-info">
+                    <h2>Corolla Pinkelle</h2>
+                    <p> Soft korean fashion PU Fabric Versatile Pink Casual Shoes for Women & Students ready stock</p>
+                    <h3>₱599</h3>
+
+                    <button onclick="openModal(
+                        'Corolla Pinkelle',
+                        'Soft korean fashion PU Fabric Versatile Pink Casual Shoes for Women & Students ready stock',
+                        'w11.mp4',
+                        {
+                            Pink: 'w11p.png',
+                            Black: 'w11w.png'
+                        },
+                        {
+                            36: 599,
+                            37: 599,
+                            38: 599,
+                            39: 599,
+                            40: 599,
+                            41: 599
+                        }
+                        )">Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="product-box">
+                <img src="w12.png">
+
+                <div class="product-info">
+                    <h2>Corolla Keel</h2>
+                    <p>White height-increasing Platform Board Shoes: Stylish&Versatile for School&Commuting Student/p>
+                    <h3>₱943</h3>
+
+                    <button onclick="openModal(
+                        'Corolla Keel',
+                        'White height-increasing Platform Board Shoes: Stylish&Versatile for School&Commuting Student',
+                        'w12.mp4',
+                        {
+                            White: 'w12w.png',
+                            'Black & White': 'w12b.png',
+                            'White & Blue': 'w12bl.png',
+                            'White & Purpule': 'w12p.png'
+                        },
+                        {
+                            36: 943,
+                            37: 946,
+                            38: 946,
+                            39: 956,
+                            40: 956,
+                            41: 956
+                        }
+                        )">Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="product-box">
+                <img src="w13.png">
+
+                <div class="product-info">
+                    <h2>Corolla StrapEase</h2>
+                    <p>Adjustble Strap Casual Low-Cut Sneakers, Non-Slip Soft Sole, Comfortable Daily Wear for School & Office</p>
+                    <h3>₱805</h3>
+
+                    <button onclick="openModal(
+                        'Corolla StrapEase',
+                        'Adjustble Strap Casual Low-Cut Sneakers, Non-Slip Soft Sole, Comfortable Daily Wear for School & Office',
+                        'w13.mp4',
+                        {
+                            'Beige Black': 'w13b.png',
+                            Khaki: 'w13k.png',
+                            Pink: 'w13p.png'
+                        },
+                        {
+                            36: 805,
+                            37: 805,
+                            38: 809,
+                            39: 819,
+                            40: 819,
+                            41: 819
+                        }
+                        )">Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="product-box">
+                <img src="w14w.png">
+
+                <div class="product-info">
+                    <h2>Corolla SeoulStep</h2>
+                    <p>Korean Fashion PU Casual Shoes - Perfect for Students</p>
+                    <h3>₱709</h3>
+
+                    <button onclick="openModal(
+                        'Corolla SeoulStep',
+                        ' Korean Fashion PU Casual Shoes - Perfect for Students',
+                        'w14.mp4',
+                        {
+                            Blue: 'w14b.png',
+                            'White & Khaki': 'w14w.png'
+                        },
+                        {
+                            36: 790,
+                            37: 790,
+                            38: 790,
+                            39: 790,
+                            40: 790,
+                            41: 790
+                        }
+                        )">Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="product-box">
+                <img src="w15.png">
+
+                <div class="product-info">
+                    <h2>Corolla WalkEase</h2>
+                    <p>Lightweight Comfortable Casual Walking Shoes Non-Slip Footwear</p>
+                    <h3>₱731</h3>
+
+                    <button onclick="openModal(
+                        'Corolla WalkEase',
+                        'Lightweight Comfortable Casual Walking Shoes Non-Slip Footwear',
+                        'w15.mp4',
+                        {
+                            Black: 'w15b.png',
+                            Apricot: 'w15a.png',
+                            Pink: 'w15p.png',
+                            'Light Gray': 'w15g.png',
+                            'Black Gray': 'w15gb.png',
+                            'Coffee Brown': 'w15c.png'
+                        },
+                        {
+                            36: 731,
+                            37: 740,
+                            38: 744,
+                            39: 766,
+                            40: 773,
+                            41: 788
+                        }
+                        )">Add to Cart
+                    </button>
+                </div>
+            </div>
+
+            <div class="product-box">
+                <img src="w16.png">
+
+                <div class="product-info">
+                    <h2>Corolla Candy</h2>
+                    <p>Thick Bottom sneakers Premium & Eye-Catching Design- Campus Fashion</p>
+                    <h3>₱870</h3>
+
+                    <button onclick="openModal(
+                        'Corolla Candy	',
+                        'Thick Bottom sneakers Premium & Eye-Catching Design- Campus Fashion',
+                        'w16.mp4',
+                        {
+                            Beige: 'w16b.png',
+                            Pink: 'w16pi.png',
+                            Green: 'w16g.png',
+                            Purple: 'w16p.png',
+                            'White & Blue': 'w16bl.png'
+                        },
+                        {
+                            36: 870,
+                            37: 878,
+                            38: 878,
+                            39: 888,
+                            40: 888,
+                            41: 888
+                        }
+                        )">Add to Cart
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+    <!-- MENS CATEGORY -->
+    <section id="mens" class="category">
+
+        <a href="#gallery" class="back">← Back to Gallery</a>
+
+        <h1 style="text-align: center;">Mens Collection</h1>
+
+        <div class="product-container">
+
+            <div class="product-box">
+                <img src="m1.png">
+
+                <div class="product-info">
+                <h2>COROLLA Men's <br>Fashion Sneakers</h2>
+                <p>Men's Sneakers Work Shoes Fashion Rubber Shoes Sports Shoes </p>
+                <h3>₱759</h3>
+
+            <button onclick="openModal(
+                'COROLLA Mens Fashion Sneakers',
+                'Mens Sneakers Work Shoes Fashion Rubber Shoes Sports Shoes',
+                'mens.fashion.mp4',
+                {
+                    Black: 'men.black.png',
+                    White: 'men.white.png',
+                    'Carbon Black': 'men.cb.png'
+                },
+                {
+                    40: 769,
+                    41: 769,
+                    42: 759,
+                    43: 760,
+                    44: 769
+                }
+            )">Add to Cart
+        </button>
+            </div>
+        </div>
+
+        <div class="product-box">
+                <img src="m2.png">
+
+                <div class="product-info">
+                <h2>COROLLA Soft Water-Repellent <br>PU Casual Shoes</h2>
+                <p>New Soft Water-Repellent PU Material Lightweight White Casual Shoes for men & Students</p>
+                <h3>₱744</h3>
+
+            <button onclick="openModal(
+                'COROLLA Soft Water-Repellent PU Casual Shoes',
+                'New Soft Water-Repellent PU Material Lightweight White Casual Shoes for men & Students',
+                'men.swr.mp4',
+                {
+                    Black: 'men.b.png',
+                    'Beige & Blue': 'men.bb.png',
+                    'Brown & Silver': 'men.bs.png',
+                    'Light blue with Gray': 'men.lbg.png',
+                    'Black & Yellow':'men.by.png'
+                },
+                {
+                    40: 759,
+                    41: 759,
+                    42: 756,
+                    43: 744,
+                    44: 759
+                }
+            )">Add to Cart
+        </button>
+            </div>
+        </div>
+
+        <div class="product-box">
+                <img src="m3.png">
+
+                <div class="product-info">
+                <h2>COROLLA ArchFitGo <br>Men's Sports Sneakers</h2>
+                <p> Men's Breathable Non-Slip 
+                    Lightweight Sports Sneakers walking with Arch Support for Work</p>
+                <h3>₱1,149</h3>
+
+            <button onclick="openModal(
+                'COROLLA ArchFitGo Mens Sports Sneakers',
+                ' Mens Breathable Non-Slip Lightweight Sports Sneakers walking with Arch Support for Work',
+                'men3.mp4',
+                {
+                    Black: 'm3b.png',
+                    White: 'm3w.png',
+                    'White & Purple': 'm3wp.png'
+                },
+                {
+                    40: 1149,
+                    41: 1149,
+                    42: 1149,
+                    43: 1149,
+                    44: 1149,
+                    45: 1149
+                }
+            )">Add to Cart
+        </button>
+            </div>
+        </div>
+
+        <div class="product-box">
+                <img src="M4.png">
+
+                <div class="product-info">
+                <h2>COROLLA FUTREX <br>Thick-Bottom Chunky Sneakers	</h2>
+                <p>Thick Bottom Breathable Shoes for Men Retro 
+                    Korean Style Chunky Sneakers Non-Slip Casual Shoes</p>
+                <h3>₱1,139</h3>
+
+            <button onclick="openModal(
+                'COROLLA FUTREX Thick-Bottom Chunky Sneakers',
+                'Thick Bottom Breathable Shoes for Women & Men Retro Korean Style Chunky Sneakers Non-Slip Casual Shoes',
+                'm4.mp4',
+                {
+                    Black: 'm4b.png',
+                    White: 'm4w.png',
+                    'Silver Gray': 'm4sg.png'
+                },
+                {
+                    36: 1149,
+                    37: 1149,
+                    32: 1149,
+                    39: 1139,
+                    40: 1149,
+                    41: 1899,
+                }
+            )">Add to Cart
+        </button>
+            </div>
+        </div>
+
+    </section>
+
+
+    <!-- KIDS CATEGORY -->
+    <section id="kids" class="category">
+
+        <a href="#gallery" class="back">← Back to Gallery</a>
+        <h1 style="text-align: center;">Kids Collection</h1>
+
+        <div class="product-container">
+
+            <div class="product-box">
+                <img src="kids.black.png">
+
+                <div class="product-info">
+                <h2>COROLLA x PODOPO <br>Kids Sneakers</h2>
+                <p>Kids' Non-Slip Lightweight Shoes 
+                    – Korean Fashion School Casual Sneakers for Boys & Girls.</p>
+                <h3>₱739</h3>
+
+            <button onclick="openModal(
+                'COROLLA x PODOPO Kids Sneakers',
+                'Kids Non-Slip Lightweight Shoes for Boys and Girls.',
+                'kids.mp4',
+                {
+                    Black: 'kids.black.png',
+                    Beige: 'kids.beige.png'
+                },
+                {
+                    29: 739,
+                    30: 739,
+                    31: 739,
+                    32: 739,
+                    33: 739
+                }
+            )">Add to Cart
+            </button>
+            </div>
+        </div>
+
+    </section>
+
+    <div id="cartModal" class="modal">
+
+        <div class="modal-content">
+
+            <span class="close" onclick="closeModal()">&times;</span>
+
+            <div class="modal-image">
+
+                <video id="modalVideo" autoplay muted loop playsinline>
+                    <source id="videoSource" src="" type="video/mp4">
+                </video>
+
+                <img id="modalImage" src="" alt="Selected shoe">
+
+            </div>
+
+                <div class="modal-details">
+
+                    <h2 id="modalName"></h2>
+
+                    <p id="modalDescription"></p>
+
+                    <label>Select Color:</label>
+                    <select id="shoeColor" onchange="updateProduct()">
+                        <option value="">Choose Color</option>
+                    </select>
+
+                    <label>Select Size:</label>
+                    <select id="shoeSize" onchange="updateProduct()">
+                        <option value="">Choose Size</option>
+                    </select>
+
+                    <h3>Price: <span id="modalPrice">Select Size</span></h3>
+
+                    <button onclick="confirmCart()">Add to Cart</button>
+
+                </div>
+
+            </div>
+        </div>
+
+     <!-- CART SIDEBAR -->
+
+<div class="cart-sidebar" id="cartSidebar">
+
+    <div class="cart-header">
+        <div>
+            <h2>My Cart</h2>
+            <p>Review your selected items</p>
+        </div>
+
+        <button class="close-cart" onclick="closeCart()">✕</button>
+    </div>
+
+    <div class="cart-items" id="cartItems">
+        <!-- Products will appear here -->
+    </div>
+
+    <div class="cart-footer">
+
+        <div class="subtotal">
+            <span>Subtotal</span>
+            <strong>₱<span id="total">0.00</span></strong>
+        </div>
+
+        <button class="checkout-btn" onclick="openCheckout()">
+            PROCEED TO CHECKOUT
+        </button>
+
+        <p class="cart-note">
+            Shipping fees will be calculated separately.
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- CHECKOUT MODAL -->
+
+<div class="checkout-overlay" id="checkoutOverlay">
+
+    <div class="checkout-modal">
+
+        <div class="checkout-header">
+            <div>
+                <h2>Checkout</h2>
+                <p>Enter your information to complete your order.</p>
+            </div>
+
+            <button onclick="closeCheckout()">✕</button>
+        </div>
+
+        <form id="checkoutForm">
+
+            <h3>Customer Information</h3>
+
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" id="customerName"
+                    placeholder="Enter your full name" required>
+            </div>
+
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" id="customerEmail"
+                    placeholder="Enter your email" required>
+            </div>
+
+            <div class="form-group">
+                <label>Contact Number</label>
+                <input type="tel" id="customerPhone"
+                    placeholder="09XXXXXXXXX" required>
+            </div>
+
+            <h3>Delivery Information</h3>
+
+            <div class="form-group">
+                <label>Complete Address</label>
+                <textarea id="customerAddress"
+                    placeholder="House number, street, barangay"
+                    required></textarea>
+            </div>
+
+            <div class="form-row">
+
+                <div class="form-group">
+                    <label>City / Municipality</label>
+                    <input type="text" id="customerCity"
+                        placeholder="City" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Province</label>
+                    <input type="text" id="customerProvince"
+                        placeholder="Province" required>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+                <label>Postal Code</label>
+                <input type="text" id="customerPostal"
+                    placeholder="Postal code" required>
+            </div>
+
+            <div class="checkout-summary">
+                <span>Total Amount</span>
+                <strong>₱<span id="checkoutTotal">0.00</span></strong>
+            </div>
+
+            <button type="submit" class="place-order-btn">
+                PLACE ORDER
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+    
+<footer class="footer" id="footer">
+
+    <div class="footer-container">
+
+        <!-- BRAND -->
+        <div class="footer-about">
+            <h2>COROLLA SHOES</h2>
+            <p>
+                Step into comfort and style.
+                Discover footwear that complements
+                every step of your journey.
+            </p>
+        </div>
+
+        <!-- QUICK LINKS -->
+        <div class="footer-links">
+            <h3>Quick Links</h3>
+            <a href="index.html">Home</a>
+            <a href="about.html">About Us</a>
+            <a href="collection.html">Collections</a>
+            <a href="gallery.html">Gallery</a>
+        </div>
+
+        <!-- CUSTOMER SERVICE -->
+        <div class="footer-links">
+            <h3>Customer Service</h3>
+            <a href="contacts.html">Contact Us</a>
+        </div>
+
+        <!-- SOCIAL MEDIA -->
+        <div class="footer-social">
+            <h3>Follow Us</h3>
+            <a href="https://www.tiktok.com/@corollashoes.official.ph?_r=1&t=ZS-9AmzLDIUdCj" >Tiktok</a>
+            <a href="https://shopee.ph/corollashoes.ph" >Shopee</a>
+            <a href="https://www.lazada.com.ph/shop/corolla-shoes/?spm=a2o4l.pdp_revamp.seller.1.73de55213MPI1y&itemId=15435195866&channelSource=pdp" >Lazada</a>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        <p>© 2026 Corolla Shoes. All Rights Reserved.</p>
+    </div>
+
+</footer>
+
+
+  
+
+    <script src="script.js"></script>
+</body>
+</html>
